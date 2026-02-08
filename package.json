@@ -1,0 +1,36 @@
+{
+  "name": "cyoa-outlook",
+  "version": "1.0.0",
+  "description": "Bad News CYOA serious game ported to Outlook Actionable Messages via Adaptive Cards",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "convert": "tsx src/conversion/parse-conversation.ts --",
+    "validate": "tsx src/conversion/validate-graph.ts",
+    "patch": "tsx src/conversion/patch-orphans.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "adaptivecards-templating": "^2.3.1",
+    "express": "^4.21.0",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.26.0",
+    "@babel/traverse": "^7.26.0",
+    "@babel/types": "^7.26.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.11.0",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

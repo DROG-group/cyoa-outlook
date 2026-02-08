@@ -1,0 +1,177 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.4",
+  "body": [
+    {
+      "type": "Container",
+      "style": "emphasis",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                {
+                  "type": "Image",
+                  "url": "https://www.getbadnews.com/wp-content/uploads/2017/07/logo.png",
+                  "size": "Small"
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "verticalContentAlignment": "Center",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "text": "Bad News",
+                  "weight": "Bolder",
+                  "size": "Medium"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "style": "default",
+      "spacing": "Medium",
+      "$when": "${showStatus}",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                { "type": "TextBlock", "text": "FOLLOWERS", "weight": "Bolder", "color": "Accent", "horizontalAlignment": "Center", "size": "Small" },
+                { "type": "TextBlock", "text": "${string(total_followers)}", "weight": "Bolder", "horizontalAlignment": "Center", "size": "ExtraLarge" },
+                { "type": "TextBlock", "text": "${followerDelta}", "color": "${followerDeltaColor}", "horizontalAlignment": "Center", "spacing": "None", "$when": "${followerDelta != ''}" }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                { "type": "TextBlock", "text": "CREDIBILITY", "weight": "Bolder", "color": "Accent", "horizontalAlignment": "Center", "size": "Small" },
+                { "type": "TextBlock", "text": "${string(trust)}", "weight": "Bolder", "horizontalAlignment": "Center", "size": "ExtraLarge" },
+                { "type": "TextBlock", "text": "${trustDelta}", "color": "${trustDeltaColor}", "horizontalAlignment": "Center", "spacing": "None", "$when": "${trustDelta != ''}" }
+              ]
+            }
+          ]
+        },
+        { "type": "TextBlock", "text": "Credibility: ${gauge}", "fontType": "Monospace", "horizontalAlignment": "Center", "spacing": "Medium" }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "spacing": "Medium",
+      "$when": "${contentType == 'message'}",
+      "items": [
+        { "type": "TextBlock", "text": "${text}", "wrap": true, "size": "Medium" }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "style": "accent",
+      "$when": "${contentType == 'tweet'}",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "type": "Column",
+              "width": "auto",
+              "items": [
+                { "type": "Image", "url": "${tweetImage}", "size": "Medium", "style": "Person" }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": "stretch",
+              "verticalContentAlignment": "Center",
+              "items": [
+                { "type": "TextBlock", "text": "${tweetName}", "weight": "Bolder", "spacing": "None", "$when": "${tweetName != ''}" },
+                { "type": "TextBlock", "text": "${tweetDescription}", "isSubtle": true, "spacing": "None", "size": "Small", "$when": "${tweetDescription != ''}" }
+              ]
+            }
+          ]
+        },
+        { "type": "TextBlock", "text": "${tweetText}", "wrap": true, "size": "Medium", "spacing": "Medium", "$when": "${tweetText != ''}" }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "horizontalAlignment": "Center",
+      "$when": "${contentType == 'badge'}",
+      "items": [
+        { "type": "TextBlock", "text": "BADGE EARNED", "weight": "Bolder", "color": "Accent", "horizontalAlignment": "Center", "size": "Large" },
+        { "type": "Image", "url": "${badgeImage}", "size": "Large", "horizontalAlignment": "Center", "$when": "${badgeImage != ''}" },
+        { "type": "TextBlock", "text": "${badgeType}", "weight": "Bolder", "horizontalAlignment": "Center", "size": "Medium", "color": "Light", "$when": "${badgeType != ''}" },
+        { "type": "TextBlock", "text": "${badgeContent}", "wrap": true, "horizontalAlignment": "Center", "$when": "${badgeContent != ''}" }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "$when": "${contentType == 'badge-all'}",
+      "items": [
+        { "type": "TextBlock", "text": "YOUR BADGES", "weight": "Bolder", "horizontalAlignment": "Center", "size": "Medium", "color": "Accent" },
+        {
+          "type": "ColumnSet",
+          "columns": [
+            {
+              "$data": "${badges}",
+              "type": "Column",
+              "width": "stretch",
+              "items": [
+                { "type": "Image", "url": "${image}", "size": "Small", "horizontalAlignment": "Center", "$when": "${earned}" },
+                { "type": "TextBlock", "text": "?", "horizontalAlignment": "Center", "size": "Large", "color": "Accent", "$when": "${!earned}" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "style": "default",
+      "$when": "${contentType == 'headline'}",
+      "items": [
+        { "type": "TextBlock", "text": "${headlineContent}", "wrap": true, "weight": "Bolder", "size": "Large", "$when": "${headlineContent != ''}" },
+        { "type": "TextBlock", "text": "${headlineName}", "isSubtle": true, "spacing": "Medium", "horizontalAlignment": "Right", "$when": "${headlineName != ''}" }
+      ]
+    },
+
+    {
+      "type": "Container",
+      "$when": "${contentType == 'image'}",
+      "items": [
+        { "type": "Image", "url": "${imageSrc}", "size": "Stretch" }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "$data": "${actions}",
+      "type": "Action.Http",
+      "title": "${title}",
+      "method": "POST",
+      "url": "${url}",
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": "${body}"
+    }
+  ]
+}
