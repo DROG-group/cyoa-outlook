@@ -11,7 +11,7 @@
     "convert": "tsx src/conversion/parse-conversation.ts --",
     "validate": "tsx src/conversion/validate-graph.ts",
     "patch": "tsx src/conversion/patch-orphans.ts",
-    "test": "vitest run",
+    "test": "npm run build && vitest run --passWithNoTests",
     "test:watch": "vitest"
   },
   "dependencies": {
@@ -32,5 +32,11 @@
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
     "vitest": "^3.0.0"
+  },
+  "overrides": {
+    "adaptive-expressions": {
+      "fast-xml-parser": "5.7.0",
+      "uuid": "11.1.1"
+    }
   }
 }
